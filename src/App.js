@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Markdown from "marked-react";
+import { marked } from 'marked';
+import { faPenAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import "./App.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function App() {
+  const defaultText =
+    "# Say hello to this nice Markdown Previewer \n## Type in all the Markdown you want \n\nHere's some example markdown: \n\nYou can do a list like this and emphasize items by making them bold or italic: \n\n- First item \n- **Second item** \n- _Third item_ \n\nAdd some links: [links](https://findtheinvisiblecow.com/) \n\nDo some coding: \n\n`<div>Hello World!</div>` \n\n```\nfunction reverseString(string) {\n var split = string.split('');\n var reverse = split.reverse();\n return reverse.join('');};\n``` \n\n> Quote some stuff! \n\nor show an image: \n\n![nice image here](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJeilGiqSt9ws-hKOFREBUD_8NjhHfUSx6ww&usqp=CAU) \n\n**Have fun!**";
+
+  const [markdown, setMarkdown] = useState(defaultText);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div id="editField">
+        <div className="header">
+          <FontAwesomeIcon icon={faPenAlt} /> Editor
+        </div>
+        <textarea
+          value={markdown}
+          onChange={(event) => setMarkdown(event.target.value)}
+          name="markdown"
+          id="editor"
+          cols="72"
+          rows="15"
+        />
+      </div>
+      <div id="previewField">
+        <div className="header">
+          <FontAwesomeIcon icon={faEye} /> Markdown Previewer
+        </div>
+        <div id="preview">
+          <Markdown value={markdown} />
+        </div>
+      </div>
     </div>
   );
 }
